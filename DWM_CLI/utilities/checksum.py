@@ -1,6 +1,6 @@
 def checksum_gen(save: list[int]) -> tuple[hex, hex]:
     """Returns the calculated checksum for a save file as a tuple of two bytes. 
-    These should be put in as the first two bytes of the file. Translated from these assembly instructions
+    These should be put in as the first two bytes of the file. Translated from these gbz80 assembly instructions
 
     1 - ldi a, [hl]
     2 - add e
@@ -29,6 +29,7 @@ def checksum_gen(save: list[int]) -> tuple[hex, hex]:
 
         # 2 - ADD E TO A. If over 255, F becomes a carry flag
         a += e
+
         if len(hex(a)) == 5:
             a -= carry
             f += 1
@@ -41,6 +42,7 @@ def checksum_gen(save: list[int]) -> tuple[hex, hex]:
 
         # 5 - ADD D (AND CARRY IF EXISTS) TO A
         a += d
+
         if f != 0:
             a += f
             f = 0x00
@@ -60,4 +62,6 @@ if __name__ == "__main__":
 
     assert(len(save_bytes) == 8192)
 
-    print(checksum_gen(save_bytes))
+    byte_one, byte_two = (checksum_gen(save_bytes))
+
+    print(byte_one, byte_two)
