@@ -1,5 +1,5 @@
 from DWM_CLI.utilities.checksum import checksum_gen
-
+from DWM_CLI.utilities.savefile_class import SaveFile
 
 
 if __name__ == "__main__":
@@ -12,3 +12,7 @@ if __name__ == "__main__":
     assert(len(save_bytes) == 8192)
 
     print("Checksum: ", checksum_gen(save=save_bytes))
+
+    save = SaveFile(file_name=file_name, save_ints=save_bytes)
+
+    print(save)
