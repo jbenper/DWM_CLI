@@ -1,3 +1,4 @@
+from encoding_tables.chardwm import char_id
 
 
 class SaveFile():
@@ -20,3 +21,4 @@ if __name__ == "__main__":
     save = SaveFile(file_name, save_bytes)
 
     print(save)
+
