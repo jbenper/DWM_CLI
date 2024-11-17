@@ -57,7 +57,10 @@ def checksum_gen(save: list[int]) -> tuple[hex, hex]:
 
 
 if __name__ == "__main__":
-    with open("DWM_CLI/test_saves/zdwm.sav", "rb") as save_file:
+    file_loc = "DWM_CLI/test_saves/zdwm.sav"
+    file_name = file_loc.split("/")[-1]
+
+    with open(file_loc, "rb") as save_file:
         save_bytes = [byte for byte in (save_file.read())]
 
     assert len(save_bytes) == 8192
