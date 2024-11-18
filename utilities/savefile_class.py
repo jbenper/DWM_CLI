@@ -4,11 +4,26 @@ class SaveFile():
         self.file_name = file_name
     
     def __repr__(self):
-        return f"Save File: {self.file_name} | SaveLength: {len(self.save_ints)} | Master Name: {self.get_master_name()}"
+        return f"""Save File: {self.file_name} | SaveLength: {len(self.save_ints)} | Master Name: {self.get_master_name()}
+Gold Amount: {self.get_gold_in_hand()} | Bank Amount: {self.get_gold_in_bank()} | """
     
     def get_master_name(self):
         return decode.master_name(self.save_ints[380:384])
     
+    def get_gold_in_hand(self):
+        big_end_hex_list = list(map(hex, self.save_ints[389 : 392]))
+
+        little_end_hex_string = '0x' + ''.join([format(int(c, 16), '02X') for c in reversed(big_end_hex_list)])
+
+        return int(little_end_hex_string, 16)
+
+    def get_gold_in_bank(self):
+        big_end_hex_list = list(map(hex, self.save_ints[392 : 395]))
+
+        little_end_hex_string = '0x' + ''.join([format(int(c, 16), '02X') for c in reversed(big_end_hex_list)])
+
+        return int(little_end_hex_string, 16)
+
     def change_byte_int(self, byte_to_change, int_change):
         """Can be used to edit savefile on an individual byte by byte basis. 
 
@@ -119,7 +134,7 @@ if __name__ == "__main__":
 
     print(save)
 
-    save.save_to_file("test_dwm")
+    # save.save_to_file("test_dwm")
 
 else:
     import utilities.decoding as decode

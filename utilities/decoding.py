@@ -15,6 +15,6 @@ if __name__ == '__main__':
     from encoding_tables import char_id, family_id, item_id, item_id, monster_id, skill_id
 
 else:
-    from encoding_tables import char_id, family_id, item_id, item_id, monster_id, skill_id
-    # from utilities.encoding_tables import char_id, family_id, item_id, item_id, monster_id, skill_id
+    # from encoding_tables import char_id, family_id, item_id, item_id, monster_id, skill_id
+    from utilities.encoding_tables import char_id, family_id, item_id, item_id, monster_id, skill_id
 
