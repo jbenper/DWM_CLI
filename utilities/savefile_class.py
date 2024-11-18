@@ -24,7 +24,7 @@ Time Played: {self.get_time_played()} | Gold Amount: {self.get_gold_in_hand()} |
 
         return int(little_end_hex_string, 16)
 
-    def get_time_played(self):
+    def get_time_played(self) -> str:
         time_list = (self.save_ints[497 : 499][::-1])
 
         return f"{time_list[0]}:{time_list[1]}"

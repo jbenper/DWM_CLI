@@ -1,0 +1,6 @@
+MAIN:
+    ☐ make offsets constants
+        ☐ dataclass  - offsets.money.start_index, offsets.money.length
+        
+ARCHIVE:
+    ✔ make todo @done(24-11-09 14:22)
