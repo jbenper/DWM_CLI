@@ -1,52 +1,75 @@
-class SaveFile():
+class SaveFile:
     def __init__(self, file_name: str, save_ints: list[int]):
         self.save_data: list[int] = save_ints
         self.file_name: str = file_name
-    
+
     def __repr__(self):
         return f"""Save File: {self.file_name} | SaveLength: {len(self.save_data)} | Master Name: {self.get_master_name()}
 Time Played: {self.get_time_played()} | Gold Amount: {self.get_gold_in_hand()} | Bank Amount: {self.get_gold_in_bank()}"""
-    
-    def get_master_name(self):
-        return decode.master_name(self.save_data[OFFSETS.master_name.start_index : OFFSETS.master_name.end_index])
-    
-    def get_gold_in_hand(self):
-        big_end_hex_list = list(map(hex, self.save_data[OFFSETS.gold_in_hand.start_index : OFFSETS.gold_in_hand.end_index]))
 
-        little_end_hex_string = '0x' + ''.join([format(int(c, 16), '02X') for c in reversed(big_end_hex_list)])
+    def get_master_name(self):
+        return decode.master_name(
+            self.save_data[
+                OFFSETS.master_name.start_index : OFFSETS.master_name.end_index
+            ]
+        )
+
+    def get_gold_in_hand(self):
+        big_end_hex_list = list(
+            map(
+                hex,
+                self.save_data[
+                    OFFSETS.gold_in_hand.start_index : OFFSETS.gold_in_hand.end_index
+                ],
+            )
+        )
+
+        little_end_hex_string = "0x" + "".join(
+            [format(int(c, 16), "02X") for c in reversed(big_end_hex_list)]
+        )
 
         return int(little_end_hex_string, 16)
 
     def get_gold_in_bank(self):
-        big_end_hex_list = list(map(hex, self.save_data[OFFSETS.gold_in_bank.start_index : OFFSETS.gold_in_bank.end_index]))
+        big_end_hex_list = list(
+            map(
+                hex,
+                self.save_data[
+                    OFFSETS.gold_in_bank.start_index : OFFSETS.gold_in_bank.end_index
+                ],
+            )
+        )
 
-        little_end_hex_string = '0x' + ''.join([format(int(c, 16), '02X') for c in reversed(big_end_hex_list)])
+        little_end_hex_string = "0x" + "".join(
+            [format(int(c, 16), "02X") for c in reversed(big_end_hex_list)]
+        )
 
         return int(little_end_hex_string, 16)
 
     def get_time_played(self) -> str:
-        time_list = (self.save_data[OFFSETS.time_played.start_index : OFFSETS.time_played.end_index][::-1])
+        time_list = self.save_data[
+            OFFSETS.time_played.start_index : OFFSETS.time_played.end_index
+        ][::-1]
 
         return f"{time_list[0]}:{time_list[1]}"
 
-
     def change_byte_int(self, byte_to_change, int_change):
-        """Can be used to edit savefile on an individual byte by byte basis. 
+        """Can be used to edit savefile on an individual byte by byte basis.
 
         Args:
-            byte_to_change (int): Index of what byte to change. 2 to 8191. 
+            byte_to_change (int): Index of what byte to change. 2 to 8191.
             int_change (int): What the byte should be changed to. 0 to 255.
-        """        
+        """
         self.save_data[byte_to_change] = int_change
 
     def change_byte_int_list(self, starting_index, ending_index, list_ints_change):
-        if (ending_index < starting_index):
+        if ending_index < starting_index:
             raise Exception("Starting Index is Greater Than Ending Index")
-        
+
         if list_ints_change == []:
             raise Exception("List of Ints to Change is Empty")
 
-        self.save_data[starting_index : ending_index] = list_ints_change
+        self.save_data[starting_index:ending_index] = list_ints_change
 
     def checksum_gen(self) -> list[int, int]:
         """Returns the calculated checksum for a save file as a tuple of two bytes.
@@ -112,9 +135,8 @@ Time Played: {self.get_time_played()} | Gold Amount: {self.get_gold_in_hand()} |
 
         byte_data = bytes(self.save_data)
 
-        with open(f'{filename}.sav', 'wb') as file:
+        with open(f"{filename}.sav", "wb") as file:
             file.write(byte_data)
-    
 
 
 if __name__ == "__main__":
@@ -132,7 +154,7 @@ if __name__ == "__main__":
     save = SaveFile(file_name, save_bytes)
 
     print(save)
-    
+
     save.change_byte_int(380, 36)
     save.change_byte_int(381, 37)
     save.change_byte_int(382, 36)
