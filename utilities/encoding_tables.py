@@ -1,4 +1,4 @@
-char_id = {
+char_id: dict[str, str] = {
     "0x00": "0",
     "0x01": "1",
     "0x02": "2",
@@ -257,7 +257,7 @@ char_id = {
     "0xff": "",
 }
 
-family_id = {
+family_id: dict[str, str] = {
     "0x00": "Slime Family",
     "0x01": "Dragon Family",
     "0x02": "Beast Family",
@@ -270,7 +270,7 @@ family_id = {
     "0x09": "Boss Family",
 }
 
-item_id = {
+item_id: dict[str, str] = {
     "0x01": "Herb",
     "0x02": "Lovewater",
     "0x03": "Sage Stone",
@@ -316,7 +316,7 @@ item_id = {
     "0x2b": "BookMark",
 }
 
-monster_id = {
+monster_id: dict[str, str] = {
     "0x00": "DrakSlime",
     "0x01": "SpotSlime",
     "0x02": "WingSlime",
@@ -535,7 +535,7 @@ monster_id = {
     "0xff": "???",
 }
 
-skill_id = {
+skill_id: dict[str, str] = {
     "0x00": "Blaze",
     "0x01": "Blazemore",
     "0x02": "Blazemost",

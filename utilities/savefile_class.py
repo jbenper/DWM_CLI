@@ -5,16 +5,17 @@ class SaveFile:
 
     def __repr__(self):
         return f"""Save File: {self.file_name} | SaveLength: {len(self.save_data)} | Master Name: {self.get_master_name()}
-Time Played: {self.get_time_played()} | Gold Amount: {self.get_gold_in_hand()} | Bank Amount: {self.get_gold_in_bank()}"""
+Time Played: {self.get_time_played()} | Gold Amount: {self.get_gold_in_hand()} | Bank Amount: {self.get_gold_in_bank()}
+Text Speed: {self.get_text_speed()}"""
 
-    def get_master_name(self):
+    def get_master_name(self) -> str:
         return decode.master_name(
             self.save_data[
                 OFFSETS.master_name.start_index : OFFSETS.master_name.end_index
             ]
         )
 
-    def get_gold_in_hand(self):
+    def get_gold_in_hand(self) -> int:
         big_end_hex_list = list(
             map(
                 hex,
@@ -30,7 +31,7 @@ Time Played: {self.get_time_played()} | Gold Amount: {self.get_gold_in_hand()} |
 
         return int(little_end_hex_string, 16)
 
-    def get_gold_in_bank(self):
+    def get_gold_in_bank(self) -> int:
         big_end_hex_list = list(
             map(
                 hex,
@@ -53,7 +54,14 @@ Time Played: {self.get_time_played()} | Gold Amount: {self.get_gold_in_hand()} |
 
         return f"{time_list[0]}:{time_list[1]}"
 
-    def change_byte_int(self, byte_to_change, int_change):
+    def get_text_speed(self) -> int:
+        # In game text speed goes from 1 to 8. 1 being fastest.
+        # In save text speed is stored as a single byte 0x00 to 0x07. 0x00 being fastest.
+        text_speed = self.save_data[OFFSETS.text_speed.start_index : OFFSETS.text_speed.end_index][0]
+
+        return int(text_speed)
+
+    def change_byte_int(self, byte_to_change: int, int_change: int):
         """Can be used to edit savefile on an individual byte by byte basis.
 
         Args:
@@ -62,7 +70,7 @@ Time Played: {self.get_time_played()} | Gold Amount: {self.get_gold_in_hand()} |
         """
         self.save_data[byte_to_change] = int_change
 
-    def change_byte_int_list(self, starting_index, ending_index, list_ints_change):
+    def change_byte_int_list(self, starting_index: int, ending_index: int, list_ints_change: list[int]):
         if ending_index < starting_index:
             raise Exception("Starting Index is Greater Than Ending Index")
 
@@ -128,12 +136,12 @@ Time Played: {self.get_time_played()} | Gold Amount: {self.get_gold_in_hand()} |
 
         return [e, d]
 
-    def save_to_file(self, filename):
-        check_sum_bytes = self.checksum_gen()
+    def save_to_file(self, filename: str):
+        check_sum_bytes: list[int] = self.checksum_gen()
 
         self.change_byte_int_list(0, 2, check_sum_bytes)
 
-        byte_data = bytes(self.save_data)
+        byte_data: bytes = bytes(self.save_data)
 
         with open(f"{filename}.sav", "wb") as file:
             file.write(byte_data)
@@ -141,6 +149,7 @@ Time Played: {self.get_time_played()} | Gold Amount: {self.get_gold_in_hand()} |
 
 if __name__ == "__main__":
     import decoding as decode
+    from offsets import OFFSETS
 
     file_loc = "test_saves/zdwm.sav"
     file_name = file_loc.split("/")[-1]
