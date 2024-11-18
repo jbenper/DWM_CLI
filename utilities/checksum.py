@@ -1,4 +1,4 @@
-def checksum_gen(save: list[int]) -> tuple[hex, hex]:
+def checksum_gen(save: list[int]) -> tuple[int, int]:
     """Returns the calculated checksum for a save file as a tuple of two bytes.
     These should be put in as the first two bytes of the file. Translated from these gbz80 assembly instructions
 
@@ -13,7 +13,7 @@ def checksum_gen(save: list[int]) -> tuple[hex, hex]:
         save (list[int]): A list of integers representing the save file. Should be 8192 ints long.
 
     Returns:
-        tuple(hex, hex): Byte 1 and Byte 2 of the save file.
+        tuple(int,int): Byte 1 and Byte 2 of the save file.
     """
 
     # These are what the registers are set to before generating the checksums.
@@ -53,11 +53,11 @@ def checksum_gen(save: list[int]) -> tuple[hex, hex]:
         # 6 - LOAD A INTO D
         d = a
 
-    return (hex(e), hex(d))
+    return (e, d)
 
 
 if __name__ == "__main__":
-    file_loc = "DWM_CLI/test_saves/zdwm.sav"
+    file_loc = "test_saves/zdwm.sav"
     file_name = file_loc.split("/")[-1]
 
     with open(file_loc, "rb") as save_file:

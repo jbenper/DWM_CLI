@@ -1,9 +1,9 @@
-from DWM_CLI.utilities.checksum import checksum_gen
-from DWM_CLI.utilities.savefile_class import SaveFile
+from utilities.checksum import checksum_gen
+from utilities.savefile_class import SaveFile
 
 
 if __name__ == "__main__":
-    file_loc = "DWM_CLI/test_saves/zdwm.sav"
+    file_loc = "test_saves/zdwm.sav"
     file_name = file_loc.split("/")[-1]
 
     with open(file_loc, "rb") as save_file:
