@@ -5,7 +5,7 @@ class SaveFile():
     
     def __repr__(self):
         return f"""Save File: {self.file_name} | SaveLength: {len(self.save_ints)} | Master Name: {self.get_master_name()}
-Gold Amount: {self.get_gold_in_hand()} | Bank Amount: {self.get_gold_in_bank()} | """
+Time Played: {self.get_time_played()} | Gold Amount: {self.get_gold_in_hand()} | Bank Amount: {self.get_gold_in_bank()}"""
     
     def get_master_name(self):
         return decode.master_name(self.save_ints[380:384])
@@ -23,6 +23,12 @@ Gold Amount: {self.get_gold_in_hand()} | Bank Amount: {self.get_gold_in_bank()} 
         little_end_hex_string = '0x' + ''.join([format(int(c, 16), '02X') for c in reversed(big_end_hex_list)])
 
         return int(little_end_hex_string, 16)
+
+    def get_time_played(self):
+        time_list = (self.save_ints[497 : 499][::-1])
+
+        return f"{time_list[0]}:{time_list[1]}"
+
 
     def change_byte_int(self, byte_to_change, int_change):
         """Can be used to edit savefile on an individual byte by byte basis. 
