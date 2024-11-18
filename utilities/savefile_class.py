@@ -113,13 +113,13 @@ if __name__ == "__main__":
     print(save)
     
     save.change_byte_int(380, 36)
-    save.change_byte_int(381, 36)
+    save.change_byte_int(381, 37)
     save.change_byte_int(382, 36)
     save.change_byte_int(383, 36)
 
     print(save)
 
-    save.save_to_file("test_save")
+    save.save_to_file("test_dwm")
 
 else:
     import utilities.decoding as decode
