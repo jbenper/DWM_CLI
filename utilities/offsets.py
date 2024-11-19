@@ -13,7 +13,7 @@ class Offsets():
     master_name: OffsetAttribute = OffsetAttribute(380, 384)
     gold_in_hand: OffsetAttribute = OffsetAttribute(389, 392)
     gold_in_bank: OffsetAttribute = OffsetAttribute(392, 395)
+    inventory: OffsetAttribute = OffsetAttribute(395, 415)
+
     time_played: OffsetAttribute = OffsetAttribute(497, 499)
-
-
 OFFSETS = Offsets()

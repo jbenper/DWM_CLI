@@ -6,7 +6,8 @@ class SaveFile:
     def __repr__(self):
         return f"""Save File: {self.file_name} | SaveLength: {len(self.save_data)} | Master Name: {self.get_master_name()}
 Time Played: {self.get_time_played()} | Gold Amount: {self.get_gold_in_hand()} | Bank Amount: {self.get_gold_in_bank()}
-Text Speed: {self.get_text_speed()}"""
+Text Speed: {self.get_text_speed()} | 
+Inventory: {self.get_inventory()}"""
 
     def get_master_name(self) -> str:
         return decode.master_name(
@@ -60,6 +61,13 @@ Text Speed: {self.get_text_speed()}"""
         text_speed = self.save_data[OFFSETS.text_speed.start_index : OFFSETS.text_speed.end_index][0]
 
         return int(text_speed)
+
+    def get_inventory(self) -> list[str]:
+        return decode.list_of_items(
+            self.save_data[
+                OFFSETS.inventory.start_index : OFFSETS.inventory.end_index
+            ]
+        )
 
     def change_byte_int(self, byte_to_change: int, int_change: int):
         """Can be used to edit savefile on an individual byte by byte basis.
