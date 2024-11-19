@@ -15,6 +15,7 @@ class Offsets:
     gold_in_bank = OffsetAttribute(392, 395)
     inventory = OffsetAttribute(395, 415)
     vault = OffsetAttribute(415, 455)
+    party_indices = OffsetAttribute(456, 459)
     time_played = OffsetAttribute(497, 499)
 
     farm_one = OffsetAttribute(507, 3785)

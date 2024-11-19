@@ -1,11 +1,12 @@
-class MonsterStats():
+class MonsterStats:
     def __init__(self, stats_ints: list[int]):
         self.stats_ints: list[int] = stats_ints
         self.level: int = self.get_level()
 
-    
     def get_level(self) -> int:
-        return self.stats_ints[STAT_OFFSETS.level.start_index : STAT_OFFSETS.level.end_index][0]
+        return self.stats_ints[
+            STAT_OFFSETS.level.start_index : STAT_OFFSETS.level.end_index
+        ][0]
 
 
 class Monster:
@@ -17,19 +18,34 @@ class Monster:
 
     def __repr__(self):
         return f"Monster({self.species}, {self.name})"
-    
+
     def get_species(self) -> str:
-        return decode.monster_species(self.monster_int_list[MONSTER_OFFSETS.species.start_index: MONSTER_OFFSETS.species.end_index][0])
+        return decode.monster_species(
+            self.monster_int_list[
+                MONSTER_OFFSETS.species.start_index : MONSTER_OFFSETS.species.end_index
+            ][0]
+        )
 
     def get_name(self) -> str:
-        return decode.name(self.monster_int_list[MONSTER_OFFSETS.name.start_index : MONSTER_OFFSETS.name.end_index])
-    
-    def get_stats(self) -> MonsterStats:
-        return MonsterStats(self.monster_int_list[MONSTER_OFFSETS.stats.start_index : MONSTER_OFFSETS.stats.end_index])
+        return decode.name(
+            self.monster_int_list[
+                MONSTER_OFFSETS.name.start_index : MONSTER_OFFSETS.name.end_index
+            ]
+        )
 
+    def get_stats(self) -> MonsterStats:
+        return MonsterStats(
+            self.monster_int_list[
+                MONSTER_OFFSETS.stats.start_index : MONSTER_OFFSETS.stats.end_index
+            ]
+        )
 
     def get_master_name(self) -> str:
-        return decode.name(self.monster_int_list[MONSTER_OFFSETS.master_name.start_index : MONSTER_OFFSETS.master_name.end_index])
+        return decode.name(
+            self.monster_int_list[
+                MONSTER_OFFSETS.master_name.start_index : MONSTER_OFFSETS.master_name.end_index
+            ]
+        )
 
 
 class Farm:
@@ -37,18 +53,21 @@ class Farm:
         self.farm_int_list: list[int] = farm_int_list
         self.farm_number: int = self.get_farm_number()
         self.monsters: list[Monster] = self.get_farm_monsters()
-    
+
     def __repr__(self):
         return f"Farm {self.farm_number} | Farm Length {len(self.farm_int_list) / 149}"
-    
+
     def get_farm_number(self) -> int:
         if len(self.farm_int_list) > 3200:
             return 1
-        
+
         return 2
 
     def get_farm_monsters(self) -> list[Monster]:
-        chunked_monster_int_list: list[list[int]] = [self.farm_int_list[x : x+149 ] for x in range(0, len(self.farm_int_list), 149)]
+        chunked_monster_int_list: list[list[int]] = [
+            self.farm_int_list[x : x + 149]
+            for x in range(0, len(self.farm_int_list), 149)
+        ]
 
         monster_list = [Monster(x) for x in chunked_monster_int_list]
 
@@ -63,7 +82,7 @@ class SaveFile:
     def __repr__(self):
         return f"""Save File: {self.file_name} | SaveLength: {len(self.save_data)} | Master Name: {self.get_master_name()}
 Time Played: {self.get_time_played()} | Gold Amount: {self.get_gold_in_hand()} | Bank Amount: {self.get_gold_in_bank()}
-Text Speed: {self.get_text_speed()} | 
+Text Speed: {self.get_text_speed()} | Current Party: {self.get_current_party()}
 Inventory: {self.get_inventory()}
 Vault: {self.get_vault_items()}"""
 
@@ -219,16 +238,34 @@ Vault: {self.get_vault_items()}"""
         with open(f"{filename}.sav", "wb") as file:
             file.write(byte_data)
 
+    def get_party_indices(self) -> list[int]:
+        indices = self.save_data[
+            OFFSETS.party_indices.start_index : OFFSETS.party_indices.end_index
+        ]
+
+        return indices
+
     def get_farm_one(self) -> Farm:
-        farm_one_list = self.save_data[OFFSETS.farm_one.start_index : OFFSETS.farm_one.end_index]
+        farm_one_list = self.save_data[
+            OFFSETS.farm_one.start_index : OFFSETS.farm_one.end_index
+        ]
 
         return Farm(farm_one_list)
 
     def get_farm_two(self) -> Farm:
-        farm_two_list = self.save_data[OFFSETS.farm_two.start_index : OFFSETS.farm_two.end_index]
+        farm_two_list = self.save_data[
+            OFFSETS.farm_two.start_index : OFFSETS.farm_two.end_index
+        ]
 
         return Farm(farm_two_list)
 
+    def get_current_party(self) -> list[Monster]:
+        current_farm_monster_list = self.get_farm_one().monsters
+        party_indices = self.get_party_indices()
+
+        current_party = [current_farm_monster_list[index] for index in party_indices]
+
+        return current_party
 
 
 if __name__ == "__main__":

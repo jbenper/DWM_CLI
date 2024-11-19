@@ -16,10 +16,5 @@ if __name__ == "__main__":
     save = SaveFile(file_name=file_name, save_ints=save_bytes)
 
     print(save)
-    # save.change_byte_int(7070, 1)
 
-    # save.save_to_file("test_dwm")
-    print(save.get_farm_one().monsters[0])
-    print(save.get_farm_one().monsters[0].get_master_name())
-    print(save.get_farm_one().monsters[0].stats.level)
-    # print(save.get_farm_two())
+    # print('\n', save.get_farm_one().monsters)
