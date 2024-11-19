@@ -7,7 +7,8 @@ class SaveFile:
         return f"""Save File: {self.file_name} | SaveLength: {len(self.save_data)} | Master Name: {self.get_master_name()}
 Time Played: {self.get_time_played()} | Gold Amount: {self.get_gold_in_hand()} | Bank Amount: {self.get_gold_in_bank()}
 Text Speed: {self.get_text_speed()} | 
-Inventory: {self.get_inventory()}"""
+Inventory: {self.get_inventory()}
+Vault: {self.get_vault_items()}"""
 
     def get_master_name(self) -> str:
         return decode.master_name(
@@ -66,6 +67,13 @@ Inventory: {self.get_inventory()}"""
         return decode.list_of_items(
             self.save_data[
                 OFFSETS.inventory.start_index : OFFSETS.inventory.end_index
+            ]
+        )
+
+    def get_vault_items(self) -> list[str]:
+        return decode.list_of_items(
+            self.save_data[
+                OFFSETS.vault.start_index : OFFSETS.vault.end_index
             ]
         )
 
