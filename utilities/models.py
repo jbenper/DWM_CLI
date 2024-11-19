@@ -1,8 +1,19 @@
+class MonsterStats():
+    def __init__(self, stats_ints: list[int]):
+        self.stats_ints: list[int] = stats_ints
+        self.level: int = self.get_level()
+
+    
+    def get_level(self) -> int:
+        return self.stats_ints[STAT_OFFSETS.level.start_index : STAT_OFFSETS.level.end_index][0]
+
+
 class Monster:
     def __init__(self, monster_int_list: list[int]):
         self.monster_int_list: list[int] = monster_int_list
         self.species: str = self.get_species()
         self.name: str = self.get_name()
+        self.stats: MonsterStats = self.get_stats()
 
     def __repr__(self):
         return f"Monster({self.species}, {self.name})"
@@ -12,6 +23,13 @@ class Monster:
 
     def get_name(self) -> str:
         return decode.name(self.monster_int_list[MONSTER_OFFSETS.name.start_index : MONSTER_OFFSETS.name.end_index])
+    
+    def get_stats(self) -> MonsterStats:
+        return MonsterStats(self.monster_int_list[MONSTER_OFFSETS.stats.start_index : MONSTER_OFFSETS.stats.end_index])
+
+
+    def get_master_name(self) -> str:
+        return decode.name(self.monster_int_list[MONSTER_OFFSETS.master_name.start_index : MONSTER_OFFSETS.master_name.end_index])
 
 
 class Farm:
@@ -34,7 +52,7 @@ class Farm:
 
         monster_list = [Monster(x) for x in chunked_monster_int_list]
 
-        print(monster_list)
+        return monster_list
 
 
 class SaveFile:
@@ -215,7 +233,7 @@ Vault: {self.get_vault_items()}"""
 
 if __name__ == "__main__":
     import decoding as decode
-    from offsets import OFFSETS, MONSTER_OFFSETS
+    from offsets import OFFSETS, MONSTER_OFFSETS, STAT_OFFSETS
 
     file_loc = "test_saves/zdwm.sav"
     file_name = file_loc.split("/")[-1]
@@ -241,4 +259,4 @@ if __name__ == "__main__":
 
 else:
     import utilities.decoding as decode
-    from utilities.offsets import OFFSETS, MONSTER_OFFSETS
+    from utilities.offsets import OFFSETS, MONSTER_OFFSETS, STAT_OFFSETS
