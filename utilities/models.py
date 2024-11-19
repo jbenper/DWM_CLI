@@ -59,22 +59,20 @@ Vault: {self.get_vault_items()}"""
     def get_text_speed(self) -> int:
         # In game text speed goes from 1 to 8. 1 being fastest.
         # In save text speed is stored as a single byte 0x00 to 0x07. 0x00 being fastest.
-        text_speed = self.save_data[OFFSETS.text_speed.start_index : OFFSETS.text_speed.end_index][0]
+        text_speed = self.save_data[
+            OFFSETS.text_speed.start_index : OFFSETS.text_speed.end_index
+        ][0]
 
         return int(text_speed)
 
     def get_inventory(self) -> list[str]:
         return decode.list_of_items(
-            self.save_data[
-                OFFSETS.inventory.start_index : OFFSETS.inventory.end_index
-            ]
+            self.save_data[OFFSETS.inventory.start_index : OFFSETS.inventory.end_index]
         )
 
     def get_vault_items(self) -> list[str]:
         return decode.list_of_items(
-            self.save_data[
-                OFFSETS.vault.start_index : OFFSETS.vault.end_index
-            ]
+            self.save_data[OFFSETS.vault.start_index : OFFSETS.vault.end_index]
         )
 
     def change_byte_int(self, byte_to_change: int, int_change: int):
@@ -86,7 +84,9 @@ Vault: {self.get_vault_items()}"""
         """
         self.save_data[byte_to_change] = int_change
 
-    def change_byte_int_list(self, starting_index: int, ending_index: int, list_ints_change: list[int]):
+    def change_byte_int_list(
+        self, starting_index: int, ending_index: int, list_ints_change: list[int]
+    ):
         if ending_index < starting_index:
             raise Exception("Starting Index is Greater Than Ending Index")
 
@@ -161,6 +161,14 @@ Vault: {self.get_vault_items()}"""
 
         with open(f"{filename}.sav", "wb") as file:
             file.write(byte_data)
+
+class Farm:
+    def __init__(self, farm_hex_list):
+        pass
+
+class Monster:
+    def __init__(self, monster_hex_list):
+        pass
 
 
 if __name__ == "__main__":

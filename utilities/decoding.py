@@ -1,37 +1,52 @@
 def zero_pad_hex(int_to_hex: int) -> str:
-    hex_code = hex(int_to_hex)
+    hex_code: str = hex(int_to_hex)
 
     if len(hex_code) == 3:
         return hex_code.replace("x", "x0")
     else:
         return hex_code
 
+
 def master_name(name_list: list[int]) -> str:
-    hex_list: list = list(map(zero_pad_hex, name_list))
+    hex_list: list[str] = list(map(zero_pad_hex, name_list))
 
-    if hex_list == ['0xd3', '0xd4', '0xd5', '0xd6']:
+    if hex_list == ["0xd3", "0xd4", "0xd5", "0xd6"]:
         return "TERRY"
-    
-    decode_chars = lambda hex_code: char_id.get(hex_code, "")
-    
-    char_list = list(map(decode_chars, hex_list))
 
-    return ''.join(char_list)
+    decode_chars = lambda hex_code: char_id.get(hex_code, "")
+
+    char_list: list[str] = list(map(decode_chars, hex_list))
+
+    return "".join(char_list)
+
 
 def list_of_items(item_list: list[int]) -> list[str]:
-    hex_item_list: list = list(map(zero_pad_hex, item_list))
+    hex_item_list: list[str] = list(map(zero_pad_hex, item_list))
 
     decode_items = lambda hex_code: item_id.get(hex_code, "")
 
-    
-    item_list = list(map(decode_items, hex_item_list))
+    item_list: list[str] = list(map(decode_items, hex_item_list))
 
     return item_list
 
-if __name__ == '__main__':
-    from encoding_tables import char_id, family_id, item_id, item_id, monster_id, skill_id
+
+if __name__ == "__main__":
+    from encoding_tables import (
+        char_id,
+        family_id,
+        item_id,
+        item_id,
+        monster_id,
+        skill_id,
+    )
 
 else:
     # from encoding_tables import char_id, family_id, item_id, item_id, monster_id, skill_id
-    from utilities.encoding_tables import char_id, family_id, item_id, item_id, monster_id, skill_id
-
+    from utilities.encoding_tables import (
+        char_id,
+        family_id,
+        item_id,
+        item_id,
+        monster_id,
+        skill_id,
+    )

@@ -1,6 +1,7 @@
 MAIN:
     ✔ make offsets constants @done(24-11-18 14:05)
         ✔ dataclass  - offsets.money.start_index, offsets.money.end_index @done(24-11-18 14:05)
+    ☐ make monster class
         
 ARCHIVE:
     ✔ make todo @done(24-11-09 14:22)
