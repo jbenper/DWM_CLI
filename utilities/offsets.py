@@ -20,5 +20,9 @@ class Offsets:
     farm_one: OffsetAttribute = OffsetAttribute(507, 3785)
     farm_two: OffsetAttribute = OffsetAttribute(4388, 7219)
 
+class MonsterOffsets:
+    species: OffsetAttribute = OffsetAttribute(9, 10)
+    name: OffsetAttribute = OffsetAttribute(1, 5)
 
 OFFSETS = Offsets()
+MONSTER_OFFSETS = MonsterOffsets()

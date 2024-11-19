@@ -7,7 +7,7 @@ def zero_pad_hex(int_to_hex: int) -> str:
         return hex_code
 
 
-def master_name(name_list: list[int]) -> str:
+def name(name_list: list[int]) -> str:
     hex_list: list[str] = list(map(zero_pad_hex, name_list))
 
     if hex_list == ["0xd3", "0xd4", "0xd5", "0xd6"]:
@@ -29,6 +29,8 @@ def list_of_items(item_list: list[int]) -> list[str]:
 
     return item_list
 
+def monster_species(species_int: int) -> str:
+    return monster_id.get(zero_pad_hex(species_int), None)
 
 if __name__ == "__main__":
     from encoding_tables import (

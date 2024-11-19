@@ -19,3 +19,5 @@ if __name__ == "__main__":
     # save.change_byte_int(7070, 1)
 
     # save.save_to_file("test_dwm")
+    print(save.get_farm_one())
+    print(save.get_farm_two())

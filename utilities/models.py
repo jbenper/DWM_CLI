@@ -1,3 +1,42 @@
+class Monster:
+    def __init__(self, monster_int_list: list[int]):
+        self.monster_int_list: list[int] = monster_int_list
+        self.species: str = self.get_species()
+        self.name: str = self.get_name()
+
+    def __repr__(self):
+        return f"Monster({self.species}, {self.name})"
+    
+    def get_species(self) -> str:
+        return decode.monster_species(self.monster_int_list[MONSTER_OFFSETS.species.start_index: MONSTER_OFFSETS.species.end_index][0])
+
+    def get_name(self) -> str:
+        return decode.name(self.monster_int_list[MONSTER_OFFSETS.name.start_index : MONSTER_OFFSETS.name.end_index])
+
+
+class Farm:
+    def __init__(self, farm_int_list: list):
+        self.farm_int_list: list[int] = farm_int_list
+        self.farm_number: int = self.get_farm_number()
+        self.monsters: list[Monster] = self.get_farm_monsters()
+    
+    def __repr__(self):
+        return f"Farm {self.farm_number} | Farm Length {len(self.farm_int_list) / 149}"
+    
+    def get_farm_number(self) -> int:
+        if len(self.farm_int_list) > 3200:
+            return 1
+        
+        return 2
+
+    def get_farm_monsters(self) -> list[Monster]:
+        chunked_monster_int_list: list[list[int]] = [self.farm_int_list[x : x+149 ] for x in range(0, len(self.farm_int_list), 149)]
+
+        monster_list = [Monster(x) for x in chunked_monster_int_list]
+
+        print(monster_list)
+
+
 class SaveFile:
     def __init__(self, file_name: str, save_ints: list[int]):
         self.save_data: list[int] = save_ints
@@ -11,7 +50,7 @@ Inventory: {self.get_inventory()}
 Vault: {self.get_vault_items()}"""
 
     def get_master_name(self) -> str:
-        return decode.master_name(
+        return decode.name(
             self.save_data[
                 OFFSETS.master_name.start_index : OFFSETS.master_name.end_index
             ]
@@ -162,18 +201,21 @@ Vault: {self.get_vault_items()}"""
         with open(f"{filename}.sav", "wb") as file:
             file.write(byte_data)
 
-class Farm:
-    def __init__(self, farm_hex_list):
-        pass
+    def get_farm_one(self) -> Farm:
+        farm_one_list = self.save_data[OFFSETS.farm_one.start_index : OFFSETS.farm_one.end_index]
 
-class Monster:
-    def __init__(self, monster_hex_list):
-        pass
+        return Farm(farm_one_list)
+
+    def get_farm_two(self) -> Farm:
+        farm_two_list = self.save_data[OFFSETS.farm_two.start_index : OFFSETS.farm_two.end_index]
+
+        return Farm(farm_two_list)
+
 
 
 if __name__ == "__main__":
     import decoding as decode
-    from offsets import OFFSETS
+    from offsets import OFFSETS, MONSTER_OFFSETS
 
     file_loc = "test_saves/zdwm.sav"
     file_name = file_loc.split("/")[-1]
@@ -199,4 +241,4 @@ if __name__ == "__main__":
 
 else:
     import utilities.decoding as decode
-    from utilities.offsets import OFFSETS
+    from utilities.offsets import OFFSETS, MONSTER_OFFSETS
