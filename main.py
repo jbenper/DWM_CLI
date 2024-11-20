@@ -17,5 +17,5 @@ if __name__ == "__main__":
 
     print(save)
     print('\n', save.get_farm_one().monsters[2])
-    
-    # print('\n', save.get_farm_one().monsters[2].get_stats())
+
+

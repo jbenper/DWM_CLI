@@ -1,13 +1,30 @@
 class MonsterStats:
     def __init__(self, stats_ints: list[int]):
         self.stats_ints: list[int] = stats_ints
-        self.level: int = self.get_level()
-
+        self._level: int = self.get_level_from_save()
+        
     def __repr__(self):
         return f"Level: {self.level}"
 
 
-    def get_level(self) -> int:
+    @property
+    def level(self):
+        """I'm the 'x' property."""
+        print("getter of x called")
+        return self._level
+
+    @level.setter
+    def level(self, value):
+        print("setter of x called")
+        self._level = value
+
+    @level.deleter
+    def level(self):
+        print("deleter of x called")
+        del self._level
+
+
+    def get_level_from_save(self) -> int:
         return self.stats_ints[
             STAT_OFFSETS.level.start_index : STAT_OFFSETS.level.end_index
         ][0]
