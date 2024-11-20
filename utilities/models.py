@@ -3,11 +3,54 @@ class MonsterStats:
         self.stats_ints: list[int] = stats_ints
         self.level: int = self.get_level()
 
+    def __repr__(self):
+        return f"Level: {self.level}"
+
+
     def get_level(self) -> int:
         return self.stats_ints[
             STAT_OFFSETS.level.start_index : STAT_OFFSETS.level.end_index
         ][0]
     
+    def get_max_level(self) -> int:
+        return self.stats_ints[
+            STAT_OFFSETS.max_level.start_index : STAT_OFFSETS.max_level.end_index
+        ][0]
+    
+    def get_total_exp(self) -> int:
+        exp_list = self.stats_ints[
+            STAT_OFFSETS.total_exp.start_index : STAT_OFFSETS.total_exp.end_index
+        ]
+
+        return decode.little_to_big(exp_list)
+    
+    def get_current_hp(self) -> int:
+        current_hp_list = self.stats_ints[
+            STAT_OFFSETS.current_hp.start_index : STAT_OFFSETS.current_hp.end_index
+        ]
+
+        return decode.little_to_big(current_hp_list)
+    
+    def get_total_hp(self) -> int:
+        total_hp_list = self.stats_ints[
+            STAT_OFFSETS.total_hp.start_index : STAT_OFFSETS.total_hp.end_index
+        ]
+
+        return decode.little_to_big(total_hp_list)
+
+    def get_current_mp(self) -> int:
+        current_mp_list = self.stats_ints[
+            STAT_OFFSETS.current_mp.start_index : STAT_OFFSETS.current_mp.end_index
+        ]
+
+        return decode.little_to_big(current_mp_list)
+    
+    def get_total_mp(self) -> int:
+        total_mp_list = self.stats_ints[
+            STAT_OFFSETS.total_mp.start_index : STAT_OFFSETS.total_mp.end_index
+        ]
+
+        return decode.little_to_big(total_mp_list)
 
     def get_breeding_plus(self) -> int:
         return self.stats_ints[
