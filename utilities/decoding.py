@@ -29,8 +29,10 @@ def list_of_items(item_list: list[int]) -> list[str]:
 
     return item_list
 
+
 def monster_species(species_int: int) -> str:
     return monster_id.get(zero_pad_hex(species_int), None)
+
 
 if __name__ == "__main__":
     from encoding_tables import (

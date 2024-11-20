@@ -21,14 +21,32 @@ class Offsets:
     farm_one = OffsetAttribute(507, 3785)
     farm_two = OffsetAttribute(4388, 7219)
 
+
 class MonsterOffsets:
     species = OffsetAttribute(9, 10)
     name = OffsetAttribute(1, 5)
     master_name = OffsetAttribute(12, 16)
-    stats = OffsetAttribute(75, 98)
+    stats = OffsetAttribute(75, 99)
+
 
 class StatOffsets:
-    level = OffsetAttribute(0,1)
+    level = OffsetAttribute(0, 1)
+    max_level = OffsetAttribute(1, 2)
+    total_exp = OffsetAttribute(2, 5)
+
+    current_hp = OffsetAttribute(5, 7)
+    total_hp = OffsetAttribute(7, 9)
+    current_mp = OffsetAttribute(9, 11)
+    total_mp = OffsetAttribute(11, 13)
+
+    attack = OffsetAttribute(13, 15)
+    defense = OffsetAttribute(15, 17)
+    agility = OffsetAttribute(17, 19)
+    intelligence = OffsetAttribute(19, 21)
+    wild = OffsetAttribute(21, 23)
+
+    breeding_plus = OffsetAttribute(23, 24)
+
 
 OFFSETS = Offsets()
 MONSTER_OFFSETS = MonsterOffsets()

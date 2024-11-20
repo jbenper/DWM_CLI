@@ -1,7 +1,16 @@
 MAIN:
     ✔ make offsets constants @done(24-11-18 14:05)
         ✔ dataclass  - offsets.money.start_index, offsets.money.end_index @done(24-11-18 14:05)
-    ☐ make monster class
+    ☐ make farm class
+        ☐ make monster class
+            ☐ make monster offsets
+
+            ☐ make stats class
+                ✔ make stats offsets @done(24-11-19 20:20)
+                ☐ make little to big function
+
+
+
         
 ARCHIVE:
     ✔ make todo @done(24-11-09 14:22)

@@ -7,6 +7,12 @@ class MonsterStats:
         return self.stats_ints[
             STAT_OFFSETS.level.start_index : STAT_OFFSETS.level.end_index
         ][0]
+    
+
+    def get_breeding_plus(self) -> int:
+        return self.stats_ints[
+            STAT_OFFSETS.breeding_plus.start_index : STAT_OFFSETS.breeding_plus.end_index
+        ][0]
 
 
 class Monster:
