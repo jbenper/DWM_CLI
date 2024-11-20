@@ -1,3 +1,13 @@
+from utilities.encoding_tables import (
+    char_id,
+    family_id,
+    item_id,
+    item_id,
+    monster_id,
+    skill_id,
+)
+
+
 def zero_pad_hex(int_to_hex: int) -> str:
     hex_code: str = hex(int_to_hex)
 
@@ -6,19 +16,18 @@ def zero_pad_hex(int_to_hex: int) -> str:
     else:
         return hex_code
 
+
 def little_to_big(int_list: list[int]) -> list[str]:
     reversed_hex_list: list[str] = list(map(zero_pad_hex, int_list))[::-1]
 
-    joined_hex_list: str = ''.join(reversed_hex_list)
+    joined_hex_list: str = "".join(reversed_hex_list)
 
-    big_end_hex_str: str = '0x' + joined_hex_list.replace("0x", "")
+    big_end_hex_str: str = "0x" + joined_hex_list.replace("0x", "")
 
     big_end_hex_int: int = int(big_end_hex_str, 16)
 
     return big_end_hex_int
-    
 
-    
 
 def name(name_list: list[int]) -> str:
     hex_list: list[str] = list(map(zero_pad_hex, name_list))
@@ -45,25 +54,3 @@ def list_of_items(item_list: list[int]) -> list[str]:
 
 def monster_species(species_int: int) -> str:
     return monster_id.get(zero_pad_hex(species_int), None)
-
-
-if __name__ == "__main__":
-    from encoding_tables import (
-        char_id,
-        family_id,
-        item_id,
-        item_id,
-        monster_id,
-        skill_id,
-    )
-
-else:
-    # from encoding_tables import char_id, family_id, item_id, item_id, monster_id, skill_id
-    from utilities.encoding_tables import (
-        char_id,
-        family_id,
-        item_id,
-        item_id,
-        monster_id,
-        skill_id,
-    )

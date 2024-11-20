@@ -16,6 +16,13 @@ if __name__ == "__main__":
     save = SaveFile(file_name=file_name, save_ints=save_bytes)
 
     print(save)
-    print('\n', save.get_farm_one().monsters[2])
+    # print('\n', save.get_farm_one().monsters[2])
+
+    rain = save.get_farm_one().monsters[2]
+
+    rain_stats = rain.get_stats()
+    
+    print(rain)
+    print(rain_stats)
 
 
