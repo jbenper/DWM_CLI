@@ -18,11 +18,13 @@ if __name__ == "__main__":
     print(save)
     # print('\n', save.get_farm_one().monsters[2])
 
-    rain = save.get_farm_one().monsters[2]
-
-    rain_stats = rain.get_stats()
+    monster = save.get_farm_one().monsters[7]
     
-    print(rain)
-    print(rain_stats)
+    print(monster)
+    dad = monster.get_dad()
+    mom = monster.get_mom()
+
+    print(dad)
+    print(mom)
 
 

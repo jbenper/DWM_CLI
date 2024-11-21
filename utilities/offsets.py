@@ -45,9 +45,22 @@ class StatOffsets:
     intelligence = OffsetAttribute(19, 21)
     wild = OffsetAttribute(21, 23)
 
-    breeding_plus = OffsetAttribute(23, 24)
+    breeding_plus = OffsetAttribute(23, 24)  
+
+class ParentOffsets:
+    dad_name: OffsetAttribute = OffsetAttribute(131, 135)
+    dad_species: OffsetAttribute = OffsetAttribute(21, 22)
+    dad_master: OffsetAttribute = OffsetAttribute(23, 27)
+    dad_breeding_plus: OffsetAttribute = OffsetAttribute(139, 140)
+
+    mom_name: OffsetAttribute = OffsetAttribute(140, 144)
+    mom_species: OffsetAttribute = OffsetAttribute(22, 23)
+    mom_master: OffsetAttribute = OffsetAttribute(32, 36)
+    mom_breeding_plus: OffsetAttribute = OffsetAttribute(148, 149)
+
 
 
 OFFSETS = Offsets()
 MONSTER_OFFSETS = MonsterOffsets()
 STAT_OFFSETS = StatOffsets()
+PARENT_OFFSETS = ParentOffsets()
