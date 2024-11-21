@@ -366,11 +366,12 @@ class MonsterStats:
 
 
 class Monster:
-    def __init__(self, monster_int_list: list[int]):
+    def __init__(self, monster_int_list: list[int], farm_index: int):
         self.monster_int_list: list[int] = monster_int_list
         self.species: str = self.get_species()
         self.name: str = self.get_name()
         self.location: str = self.get_location()
+        self.farm_index: int = farm_index
 
         self.stats: MonsterStats = self.get_stats()
 
@@ -473,7 +474,7 @@ class Farm:
             for x in range(0, len(self.farm_int_list), 149)
         ]
 
-        monster_list = [Monster(x) for x in chunked_monster_int_list]
+        monster_list = [Monster(x, ind) for ind, x in enumerate(chunked_monster_int_list)]
 
         return monster_list
 
