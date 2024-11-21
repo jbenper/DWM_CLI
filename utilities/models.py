@@ -139,9 +139,7 @@ class MonsterStats:
         self._breeding_plus: int = self.get_breeding_plus_from_save()
 
     def __repr__(self):
-        return f"""Level: {self.level} | Max Level: {self.max_level} | Total Ex: {self.total_exp} | Breeding Plus: {self.breeding_plus}
-Current HP: {self.current_hp} | Total HP: {self.total_hp} | Current MP: {self.current_mp} | Total MP: {self.total_mp}
-ATK: {self.attack} | DEF: {self.defense} | AGL: {self.agility} | INT: {self.intelligence} | WLD: {self.wild}"""
+        return f"""Level: {self.level} | Max Level: {self.max_level} | Total Ex: {self.total_exp} | Breeding Plus: {self.breeding_plus} | Current HP: {self.current_hp} | Total HP: {self.total_hp} | Current MP: {self.current_mp} | Total MP: {self.total_mp} | ATK: {self.attack} | DEF: {self.defense} | AGL: {self.agility} | INT: {self.intelligence} | WLD: {self.wild}"""
 
     def get_level_from_save(self) -> int:
         return self.stats_ints[
@@ -372,7 +370,15 @@ class Monster:
         self.monster_int_list: list[int] = monster_int_list
         self.species: str = self.get_species()
         self.name: str = self.get_name()
+        self.location: str = self.get_location()
+
         self.stats: MonsterStats = self.get_stats()
+
+        self.status: str = self.get_status()
+
+        self.learned_skills: list[str] = self.get_learned_skills()
+        self.unlearned_skills: list[str] = self.get_unlearned_skills()
+
 
     def __repr__(self):
         return f"Monster({self.species}, {self.name})"
@@ -391,12 +397,47 @@ class Monster:
             ]
         )
 
+    def get_learned_skills(self) -> list[str]:
+        return decode.skills(
+                    self.monster_int_list[MONSTER_OFFSETS.learned_skills.start_index : MONSTER_OFFSETS.learned_skills.end_index]
+                )
+    
+    def get_unlearned_skills(self) -> list[str]:
+        return decode.skills(
+                    self.monster_int_list[MONSTER_OFFSETS.unlearned_skills.start_index : MONSTER_OFFSETS.unlearned_skills.end_index]
+                )
+
+    def get_location(self) -> str:
+        location_int = self.monster_int_list[MONSTER_OFFSETS.location.start_index : MONSTER_OFFSETS.location.end_index][0]
+        
+        if location_int == 0:
+            return "Bred"
+        elif location_int == 1:
+            return "Farm"
+        elif location_int == 2:
+            return "Party"
+
+    def get_family(self) -> str:
+        return decode.monster_family(
+            self.monster_int_list[
+                MONSTER_OFFSETS.family.start_index : MONSTER_OFFSETS.family.end_index
+            ][0]
+        )
+
     def get_stats(self) -> MonsterStats:
         return MonsterStats(
             self.monster_int_list[
                 MONSTER_OFFSETS.stats.start_index : MONSTER_OFFSETS.stats.end_index
             ]
         )
+
+    def get_status(self) -> str:
+        status_int: int = self.monster_int_list[MONSTER_OFFSETS.status.start_index : MONSTER_OFFSETS.status.end_index][0]
+
+        if status_int == 0:
+            return "Hatched"
+        elif status_int == 1:
+            return "Egg"
 
     def get_master_name(self) -> str:
         return decode.name(

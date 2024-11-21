@@ -4,6 +4,11 @@ MAIN:
     ☐ make farm class
         ☐ make monster class
             ☐ make monster offsets
+                ☐ location
+                ✔ family @done(24-11-20 20:48)
+                ✔ skills @done(24-11-20 20:39)
+                ✔ status @done(24-11-20 20:51)
+                ☐ farm index
 
             ☐ make stats class
                 ✔ make stats offsets @done(24-11-19 20:20)

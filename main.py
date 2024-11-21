@@ -1,5 +1,23 @@
 from utilities.models import SaveFile
 
+from inspect import getmembers
+from types import FunctionType
+
+def attributes(obj):
+    disallowed_names = {
+      name for name, value in getmembers(type(obj)) 
+        if isinstance(value, FunctionType)}
+    
+    disallowed_names.add("monster_int_list")
+
+    return {
+      name: getattr(obj, name) for name in dir(obj) 
+        if name[0] != '_' and name not in disallowed_names and hasattr(obj, name)}
+
+def print_attributes(obj):
+    print('')
+    print(attributes(obj))
+
 
 if __name__ == "__main__":
     file_loc: str = "test_saves/zdwm.sav"
@@ -16,15 +34,8 @@ if __name__ == "__main__":
     save = SaveFile(file_name=file_name, save_ints=save_bytes)
 
     print(save)
-    # print('\n', save.get_farm_one().monsters[2])
+    # print('\n', save.get_farm_one().monsters[0])
 
-    monster = save.get_farm_one().monsters[7]
-    
-    print(monster)
-    dad = monster.get_dad()
-    mom = monster.get_mom()
+    monster = save.get_farm_one().monsters[2]
 
-    print(dad)
-    print(mom)
-
-
+    print_attributes(monster)   

@@ -23,10 +23,15 @@ class Offsets:
 
 
 class MonsterOffsets:
-    species = OffsetAttribute(9, 10)
+    location = OffsetAttribute(0, 1)
     name = OffsetAttribute(1, 5)
+    species = OffsetAttribute(9, 10)
+    family = OffsetAttribute(10, 11)
     master_name = OffsetAttribute(12, 16)
+    learned_skills = OffsetAttribute(41, 49)
+    unlearned_skills = OffsetAttribute(49, 74)
     stats = OffsetAttribute(75, 99)
+    status = OffsetAttribute(99, 100)
 
 
 class StatOffsets:
@@ -48,15 +53,15 @@ class StatOffsets:
     breeding_plus = OffsetAttribute(23, 24)  
 
 class ParentOffsets:
-    dad_name: OffsetAttribute = OffsetAttribute(131, 135)
-    dad_species: OffsetAttribute = OffsetAttribute(21, 22)
-    dad_master: OffsetAttribute = OffsetAttribute(23, 27)
-    dad_breeding_plus: OffsetAttribute = OffsetAttribute(139, 140)
+    dad_name = OffsetAttribute(131, 135)
+    dad_species = OffsetAttribute(21, 22)
+    dad_master = OffsetAttribute(23, 27)
+    dad_breeding_plus = OffsetAttribute(139, 140)
 
-    mom_name: OffsetAttribute = OffsetAttribute(140, 144)
-    mom_species: OffsetAttribute = OffsetAttribute(22, 23)
-    mom_master: OffsetAttribute = OffsetAttribute(32, 36)
-    mom_breeding_plus: OffsetAttribute = OffsetAttribute(148, 149)
+    mom_name = OffsetAttribute(140, 144)
+    mom_species = OffsetAttribute(22, 23)
+    mom_master = OffsetAttribute(32, 36)
+    mom_breeding_plus = OffsetAttribute(148, 149)
 
 
 
