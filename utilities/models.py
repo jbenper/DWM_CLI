@@ -648,6 +648,8 @@ Vault: {self.get_vault_items()}"""
             OFFSETS.party_indices.start_index : OFFSETS.party_indices.end_index
         ]
 
+        indices = [x for x in indices if x != 255]
+
         return indices
 
     def get_farm_one(self) -> Farm:
@@ -666,6 +668,7 @@ Vault: {self.get_vault_items()}"""
 
     def get_current_party(self) -> list[Monster]:
         current_farm_monster_list = self.get_farm_one().monsters
+
         party_indices = self.get_party_indices()
 
         current_party = [current_farm_monster_list[index] for index in party_indices]

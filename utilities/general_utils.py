@@ -1,5 +1,11 @@
 from inspect import getmembers
 from types import FunctionType
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("file", help="the location of the save file", nargs='?', default="test_saves/zdwm.sav")
+arguments = parser.parse_args()
+
 
 def attributes(obj):
     disallowed_names = {
@@ -7,6 +13,8 @@ def attributes(obj):
         if isinstance(value, FunctionType)}
     
     disallowed_names.add("monster_int_list")
+    disallowed_names.add("farm_int_list")
+
 
     return {
       name: getattr(obj, name) for name in dir(obj) 
