@@ -1,27 +1,19 @@
 from utilities.models import SaveFile
+from utilities.debugging import print_attributes
 
-from inspect import getmembers
-from types import FunctionType
+# import argparse
 
-def attributes(obj):
-    disallowed_names = {
-      name for name, value in getmembers(type(obj)) 
-        if isinstance(value, FunctionType)}
-    
-    disallowed_names.add("monster_int_list")
+# parser = argparse.ArgumentParser()
+# parser.add_argument("file", help="the location of the save file")
+# args = parser.parse_args()
 
-    return {
-      name: getattr(obj, name) for name in dir(obj) 
-        if name[0] != '_' and name not in disallowed_names and hasattr(obj, name)}
-
-def print_attributes(obj):
-    print('')
-    print(attributes(obj))
-
+debug = True
 
 if __name__ == "__main__":
-    file_loc: str = "test_saves/zdwm.sav"
-    # file_loc: str = "test_dwm.sav"
+    if debug:
+        file_loc: str = "test_dwm.sav"
+    else:
+        file_loc: str = args.file
 
     file_name: str = file_loc.split("/")[-1]
 
