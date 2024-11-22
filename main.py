@@ -14,8 +14,10 @@ if __name__ == "__main__":
     save = SaveFile(file_name=file_name, save_ints=save_bytes)
 
     print(save)
+    
+
     # print('\n', save.get_farm_one().monsters[0])
 
-    monster = save.get_farm_one()
+    farm = save.get_farm_one()
 
-    print_attributes(monster)   
+    print_attributes(farm)

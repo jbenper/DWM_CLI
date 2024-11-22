@@ -372,7 +372,6 @@ class Monster:
         self.name: str = self.get_name()
         self.location: str = self.get_location()
         self.farm_index: int = farm_index
-
         self.stats: MonsterStats = self.get_stats()
 
         self.status: str = self.get_status()

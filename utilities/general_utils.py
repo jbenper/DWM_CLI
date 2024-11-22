@@ -3,7 +3,7 @@ from types import FunctionType
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument("file", help="the location of the save file", nargs='?', default="test_saves/zdwm.sav")
+parser.add_argument("file", help="the location of the save file", nargs='?', default="test_saves/slib25.sav")
 arguments = parser.parse_args()
 
 

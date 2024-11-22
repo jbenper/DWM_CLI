@@ -27,11 +27,15 @@ class MonsterOffsets:
     name = OffsetAttribute(1, 5)
     species = OffsetAttribute(9, 10)
     family = OffsetAttribute(10, 11)
+    gender = OffsetAttribute(11, 12)
     master_name = OffsetAttribute(12, 16)
     learned_skills = OffsetAttribute(41, 49)
     unlearned_skills = OffsetAttribute(49, 74)
     stats = OffsetAttribute(75, 99)
     status = OffsetAttribute(99, 100)
+
+    personality = OffsetAttribute(100, 104)
+    resistances = OffsetAttribute(104, 130)
 
 
 class StatOffsets:
