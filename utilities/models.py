@@ -1,5 +1,5 @@
 import utilities.decoding as decode
-from utilities.offsets import OFFSETS, MONSTER_OFFSETS, STAT_OFFSETS, PARENT_OFFSETS
+from utilities.offsets import OFFSETS, MONSTER_OFFSETS, STAT_OFFSETS, PARENT_OFFSETS, TRAIT_OFFSETS
 
 class MonsterParent:
     def __init__(self, monster_ints: list[int], gender: str):
@@ -115,6 +115,87 @@ class MonsterParent:
         # print("setter of level called")
         self._breeding_plus = value
 
+
+class Personality:
+    def __init__(self, personality_ints: list[int]):
+        self.personality_ints: list[int] = personality_ints
+
+        self._bravery: int = self.get_bravery_from_save()
+        self._caring: int = self.get_caring_from_save()
+        self._prudence: int = self.get_prudence_from_save()
+        self._motivation: int = self.get_motivation_from_save()
+
+        self.personality = self.calculate_personality()
+
+    def __repr__(self):
+        return f"Bravery: {self.bravery} | Caring: {self.caring} | Prudence: {self.prudence} | Motivation: {self.motivation}"
+
+    def calculate_personality(self) -> str:
+        return "N/A"
+
+    def get_bravery_from_save(self) -> int:
+        return self.personality_ints[
+            TRAIT_OFFSETS.bravery.start_index : TRAIT_OFFSETS.bravery.end_index
+        ][0]
+
+    @property
+    def bravery(self):
+        """Current bravery of Monster"""
+        # print("getter of bravery called")
+        return self._bravery
+
+    @bravery.setter
+    def bravery(self, value):
+        # print("setter of bravery called")
+        self._bravery = value
+
+    def get_caring_from_save(self) -> int:
+        return self.personality_ints[
+            TRAIT_OFFSETS.caring.start_index : TRAIT_OFFSETS.caring.end_index
+        ][0]
+
+    @property
+    def caring(self):
+        """Current caring of Monster"""
+        # print("getter of caring called")
+        return self._caring
+
+    @caring.setter
+    def caring(self, value):
+        # print("setter of caring called")
+        self._caring = value
+
+    def get_prudence_from_save(self) -> int:
+        return self.personality_ints[
+            TRAIT_OFFSETS.prudence.start_index : TRAIT_OFFSETS.prudence.end_index
+        ][0]
+
+    @property
+    def prudence(self):
+        """Current prudence of Monster"""
+        # print("getter of prudence called")
+        return self._prudence
+
+    @prudence.setter
+    def prudence(self, value):
+        # print("setter of prudence called")
+        self._prudence = value
+
+    def get_motivation_from_save(self) -> int:
+        return self.personality_ints[
+            TRAIT_OFFSETS.motivation.start_index : TRAIT_OFFSETS.motivation.end_index
+        ][0]
+
+    @property
+    def motivation(self):
+        """Current motivation of Monster"""
+        # print("getter of motivation called")
+        return self._motivation
+
+    @motivation.setter
+    def motivation(self, value):
+        # print("setter of motivation called")
+        self._motivation = value
 
 
 class MonsterStats:
@@ -374,7 +455,10 @@ class Monster:
         self.farm_index: int = farm_index
         self.stats: MonsterStats = self.get_stats()
 
+        # print(self.get_species(),monster_int_list[MONSTER_OFFSETS.resistances.start_index: MONSTER_OFFSETS.resistances.end_index])
         self.status: str = self.get_status()
+
+        self.personality = self.get_personality_values()
 
         self.learned_skills: list[str] = self.get_learned_skills()
         self.unlearned_skills: list[str] = self.get_unlearned_skills()
@@ -438,6 +522,9 @@ class Monster:
             return "Hatched"
         elif status_int == 1:
             return "Egg"
+
+    def get_personality_values(self) -> Personality:
+        return Personality(self.monster_int_list[MONSTER_OFFSETS.personality.start_index : MONSTER_OFFSETS.personality.end_index])
 
     def get_master_name(self) -> str:
         return decode.name(

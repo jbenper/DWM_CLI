@@ -20,4 +20,4 @@ if __name__ == "__main__":
 
     farm = save.get_farm_one()
 
-    print_attributes(farm)
+    print_attributes(farm.get_farm_monsters()[0])

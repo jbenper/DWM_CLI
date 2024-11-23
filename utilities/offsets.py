@@ -68,8 +68,15 @@ class ParentOffsets:
     mom_breeding_plus = OffsetAttribute(148, 149)
 
 
+class TraitOffsets:
+    bravery = OffsetAttribute(0,1)
+    caring = OffsetAttribute(1,2)
+    prudence = OffsetAttribute(2,3)
+    motivation = OffsetAttribute(3,4)
+
 
 OFFSETS = Offsets()
 MONSTER_OFFSETS = MonsterOffsets()
 STAT_OFFSETS = StatOffsets()
 PARENT_OFFSETS = ParentOffsets()
+TRAIT_OFFSETS = TraitOffsets()
