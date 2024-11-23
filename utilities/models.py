@@ -1,5 +1,5 @@
 import utilities.decoding as decode
-from utilities.offsets import OFFSETS, MONSTER_OFFSETS, STAT_OFFSETS, PARENT_OFFSETS, TRAIT_OFFSETS
+from utilities.offsets import SAVE_OFFSETS, MONSTER_OFFSETS, STAT_OFFSETS, PARENT_OFFSETS, TRAIT_OFFSETS, RESISTANCE_OFFSETS
 
 class MonsterParent:
     def __init__(self, monster_ints: list[int], gender: str):
@@ -196,6 +196,40 @@ class Personality:
     def motivation(self, value):
         # print("setter of motivation called")
         self._motivation = value
+
+class Resistances:
+    def __init__(self, resistance_int_list: list[int]):
+        self.resistance_int_list = resistance_int_list
+
+        self.fire: int = self.resistance_int_list[RESISTANCE_OFFSETS.fire.start_index : RESISTANCE_OFFSETS.fire.end_index][0]
+        self.heat: int = self.resistance_int_list[RESISTANCE_OFFSETS.heat.start_index : RESISTANCE_OFFSETS.heat.end_index][0]
+        self.explosion: int = self.resistance_int_list[RESISTANCE_OFFSETS.explosion.start_index : RESISTANCE_OFFSETS.explosion.end_index][0]
+        self.wind: int = self.resistance_int_list[RESISTANCE_OFFSETS.wind.start_index : RESISTANCE_OFFSETS.wind.end_index][0]
+        self.lightning: int = self.resistance_int_list[RESISTANCE_OFFSETS.lightning.start_index : RESISTANCE_OFFSETS.lightning.end_index][0]
+        self.ice: int = self.resistance_int_list[RESISTANCE_OFFSETS.ice.start_index : RESISTANCE_OFFSETS.ice.end_index][0]
+        self.accuracy: int = self.resistance_int_list[RESISTANCE_OFFSETS.accuracy.start_index : RESISTANCE_OFFSETS.accuracy.end_index][0]
+        self.sleep: int = self.resistance_int_list[RESISTANCE_OFFSETS.sleep.start_index : RESISTANCE_OFFSETS.sleep.end_index][0]
+        self.death: int = self.resistance_int_list[RESISTANCE_OFFSETS.death.start_index : RESISTANCE_OFFSETS.death.end_index][0]
+        self.mp: int = self.resistance_int_list[RESISTANCE_OFFSETS.mp.start_index : RESISTANCE_OFFSETS.mp.end_index][0]
+        self.spellblock: int = self.resistance_int_list[RESISTANCE_OFFSETS.spellblock.start_index : RESISTANCE_OFFSETS.spellblock.end_index][0]
+        self.confusion: int = self.resistance_int_list[RESISTANCE_OFFSETS.confusion.start_index : RESISTANCE_OFFSETS.confusion.end_index][0]
+        self.defdown: int = self.resistance_int_list[RESISTANCE_OFFSETS.defdown.start_index : RESISTANCE_OFFSETS.defdown.end_index][0]
+        self.agldown: int = self.resistance_int_list[RESISTANCE_OFFSETS.agldown.start_index : RESISTANCE_OFFSETS.agldown.end_index][0]
+        self.sacrifice: int = self.resistance_int_list[RESISTANCE_OFFSETS.sacrifice.start_index : RESISTANCE_OFFSETS.sacrifice.end_index][0]
+        self.megamagic: int = self.resistance_int_list[RESISTANCE_OFFSETS.megamagic.start_index : RESISTANCE_OFFSETS.megamagic.end_index][0]
+        self.firebreath: int = self.resistance_int_list[RESISTANCE_OFFSETS.firebreath.start_index : RESISTANCE_OFFSETS.firebreath.end_index][0]
+        self.icebreath: int = self.resistance_int_list[RESISTANCE_OFFSETS.icebreath.start_index : RESISTANCE_OFFSETS.icebreath.end_index][0]
+        self.poison: int = self.resistance_int_list[RESISTANCE_OFFSETS.poison.start_index : RESISTANCE_OFFSETS.poison.end_index][0]
+        self.paralyze: int = self.resistance_int_list[RESISTANCE_OFFSETS.paralyze.start_index : RESISTANCE_OFFSETS.paralyze.end_index][0]
+        self.curse: int = self.resistance_int_list[RESISTANCE_OFFSETS.curse.start_index : RESISTANCE_OFFSETS.curse.end_index][0]
+        self.miss_a_turn: int = self.resistance_int_list[RESISTANCE_OFFSETS.miss_a_turn.start_index : RESISTANCE_OFFSETS.miss_a_turn.end_index][0]
+        self.danceblock: int = self.resistance_int_list[RESISTANCE_OFFSETS.danceblock.start_index : RESISTANCE_OFFSETS.danceblock.end_index][0]
+        self.breathblock: int = self.resistance_int_list[RESISTANCE_OFFSETS.breathblock.start_index : RESISTANCE_OFFSETS.breathblock.end_index][0]
+        self.aid: int = self.resistance_int_list[RESISTANCE_OFFSETS.aid.start_index : RESISTANCE_OFFSETS.aid.end_index][0]
+        self.gigaslash: int = self.resistance_int_list[RESISTANCE_OFFSETS.gigaslash.start_index : RESISTANCE_OFFSETS.gigaslash.end_index][0]
+    
+    def __repr__(self):
+        return f"{self.__class__.__name__}({', '.join(f'{key}={value!r}' for key, value in self.__dict__.items() if key != "resistance_int_list")})"
 
 
 class MonsterStats:
@@ -454,11 +488,10 @@ class Monster:
         self.location: str = self.get_location()
         self.farm_index: int = farm_index
         self.stats: MonsterStats = self.get_stats()
-
-        # print(self.get_species(),monster_int_list[MONSTER_OFFSETS.resistances.start_index: MONSTER_OFFSETS.resistances.end_index])
         self.status: str = self.get_status()
 
-        self.personality = self.get_personality_values()
+        self.personality: Personality = self.get_personality_values()
+        self.resistances: Resistances = self.get_resistances()
 
         self.learned_skills: list[str] = self.get_learned_skills()
         self.unlearned_skills: list[str] = self.get_unlearned_skills()
@@ -526,6 +559,9 @@ class Monster:
     def get_personality_values(self) -> Personality:
         return Personality(self.monster_int_list[MONSTER_OFFSETS.personality.start_index : MONSTER_OFFSETS.personality.end_index])
 
+    def get_resistances(self) -> Resistances:
+            return Resistances(self.monster_int_list[MONSTER_OFFSETS.resistances.start_index : MONSTER_OFFSETS.resistances.end_index])
+
     def get_master_name(self) -> str:
         return decode.name(
             self.monster_int_list[
@@ -580,7 +616,7 @@ Vault: {self.get_vault_items()}"""
     def get_master_name(self) -> str:
         return decode.name(
             self.save_data[
-                OFFSETS.master_name.start_index : OFFSETS.master_name.end_index
+                SAVE_OFFSETS.master_name.start_index : SAVE_OFFSETS.master_name.end_index
             ]
         )
 
@@ -589,7 +625,7 @@ Vault: {self.get_vault_items()}"""
             map(
                 hex,
                 self.save_data[
-                    OFFSETS.gold_in_hand.start_index : OFFSETS.gold_in_hand.end_index
+                    SAVE_OFFSETS.gold_in_hand.start_index : SAVE_OFFSETS.gold_in_hand.end_index
                 ],
             )
         )
@@ -605,7 +641,7 @@ Vault: {self.get_vault_items()}"""
             map(
                 hex,
                 self.save_data[
-                    OFFSETS.gold_in_bank.start_index : OFFSETS.gold_in_bank.end_index
+                    SAVE_OFFSETS.gold_in_bank.start_index : SAVE_OFFSETS.gold_in_bank.end_index
                 ],
             )
         )
@@ -618,7 +654,7 @@ Vault: {self.get_vault_items()}"""
 
     def get_time_played(self) -> str:
         time_list = self.save_data[
-            OFFSETS.time_played.start_index : OFFSETS.time_played.end_index
+            SAVE_OFFSETS.time_played.start_index : SAVE_OFFSETS.time_played.end_index
         ][::-1]
 
         return f"{time_list[0]}:{time_list[1]}"
@@ -627,19 +663,19 @@ Vault: {self.get_vault_items()}"""
         # In game text speed goes from 1 to 8. 1 being fastest.
         # In save text speed is stored as a single byte 0x00 to 0x07. 0x00 being fastest.
         text_speed = self.save_data[
-            OFFSETS.text_speed.start_index : OFFSETS.text_speed.end_index
+            SAVE_OFFSETS.text_speed.start_index : SAVE_OFFSETS.text_speed.end_index
         ][0]
 
         return int(text_speed)
 
     def get_inventory(self) -> list[str]:
         return decode.list_of_items(
-            self.save_data[OFFSETS.inventory.start_index : OFFSETS.inventory.end_index]
+            self.save_data[SAVE_OFFSETS.inventory.start_index : SAVE_OFFSETS.inventory.end_index]
         )
 
     def get_vault_items(self) -> list[str]:
         return decode.list_of_items(
-            self.save_data[OFFSETS.vault.start_index : OFFSETS.vault.end_index]
+            self.save_data[SAVE_OFFSETS.vault.start_index : SAVE_OFFSETS.vault.end_index]
         )
 
     def change_byte_int(self, byte_to_change: int, int_change: int):
@@ -731,7 +767,7 @@ Vault: {self.get_vault_items()}"""
 
     def get_party_indices(self) -> list[int]:
         indices = self.save_data[
-            OFFSETS.party_indices.start_index : OFFSETS.party_indices.end_index
+            SAVE_OFFSETS.party_indices.start_index : SAVE_OFFSETS.party_indices.end_index
         ]
 
         indices = [x for x in indices if x != 255]
@@ -740,14 +776,14 @@ Vault: {self.get_vault_items()}"""
 
     def get_farm_one(self) -> Farm:
         farm_one_list = self.save_data[
-            OFFSETS.farm_one.start_index : OFFSETS.farm_one.end_index
+            SAVE_OFFSETS.farm_one.start_index : SAVE_OFFSETS.farm_one.end_index
         ]
 
         return Farm(farm_one_list)
 
     def get_farm_two(self) -> Farm:
         farm_two_list = self.save_data[
-            OFFSETS.farm_two.start_index : OFFSETS.farm_two.end_index
+            SAVE_OFFSETS.farm_two.start_index : SAVE_OFFSETS.farm_two.end_index
         ]
 
         return Farm(farm_two_list)

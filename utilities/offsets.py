@@ -7,7 +7,7 @@ class OffsetAttribute:
     end_index: int
 
 
-class Offsets:
+class SaveOffsets:
     checksum = OffsetAttribute(0, 2)
     text_speed = OffsetAttribute(40, 41)
     master_name = OffsetAttribute(380, 384)
@@ -69,14 +69,42 @@ class ParentOffsets:
 
 
 class TraitOffsets:
-    bravery = OffsetAttribute(0,1)
-    caring = OffsetAttribute(1,2)
-    prudence = OffsetAttribute(2,3)
-    motivation = OffsetAttribute(3,4)
+    bravery = OffsetAttribute(0, 1)
+    caring = OffsetAttribute(1, 2)
+    prudence = OffsetAttribute(2, 3)
+    motivation = OffsetAttribute(3, 4)
 
+class ResistanceOffsets:
+    fire = OffsetAttribute(0, 1)
+    heat = OffsetAttribute(1, 2)
+    explosion = OffsetAttribute(2, 3)
+    wind = OffsetAttribute(3, 4)
+    lightning = OffsetAttribute(4, 5)
+    ice = OffsetAttribute(5, 6)
+    accuracy = OffsetAttribute(6, 7)
+    sleep = OffsetAttribute(7, 8)
+    death = OffsetAttribute(8, 9)
+    mp = OffsetAttribute(9, 10)
+    spellblock = OffsetAttribute(10, 11)
+    confusion = OffsetAttribute(11, 12)
+    defdown = OffsetAttribute(12, 13)
+    agldown = OffsetAttribute(13, 14)
+    sacrifice = OffsetAttribute(14, 15)
+    megamagic = OffsetAttribute(15, 16)
+    firebreath = OffsetAttribute(16, 17)
+    icebreath = OffsetAttribute(17, 18)
+    poison = OffsetAttribute(18, 19)
+    paralyze = OffsetAttribute(19, 20)
+    curse = OffsetAttribute(20, 21)
+    miss_a_turn = OffsetAttribute(21, 22)
+    danceblock = OffsetAttribute(22, 23)
+    breathblock = OffsetAttribute(23, 24)
+    aid = OffsetAttribute(24, 25)
+    gigaslash = OffsetAttribute(25, 26)
 
-OFFSETS = Offsets()
+SAVE_OFFSETS = SaveOffsets()
 MONSTER_OFFSETS = MonsterOffsets()
 STAT_OFFSETS = StatOffsets()
 PARENT_OFFSETS = ParentOffsets()
 TRAIT_OFFSETS = TraitOffsets()
+RESISTANCE_OFFSETS = ResistanceOffsets()
