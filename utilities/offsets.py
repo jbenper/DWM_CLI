@@ -10,6 +10,7 @@ class OffsetAttribute:
 class SaveOffsets:
     checksum = OffsetAttribute(0, 2)
     text_speed = OffsetAttribute(40, 41)
+    tiny_medals = OffsetAttribute(61, 62)
     master_name = OffsetAttribute(380, 384)
     gold_in_hand = OffsetAttribute(389, 392)
     gold_in_bank = OffsetAttribute(392, 395)

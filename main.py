@@ -13,17 +13,19 @@ if __name__ == "__main__":
 
     save = SaveFile(file_name=file_name, save_ints=save_bytes)
 
-    print(save)
+    print(save.save_data[462:462+27])
+    print([hex(x) for x in save.save_data[462:462+27]])
+
     
 
     # print('\n', save.get_farm_one().monsters[0])
 
-    farm = save.get_farm_one()
+    # farm = save.get_farm_one()
 
-    monster_one = farm.get_farm_monsters()[0]
+    # monster_one = farm.get_farm_monsters()[0]
 
-    print_attributes(monster_one)
+    # print_attributes(monster_one)
 
-    monster_one.resistances.fire = 3
+    # monster_one.resistances.fire = 3
 
-    print_attributes(monster_one)
+    # print_attributes(monster_one)
