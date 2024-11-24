@@ -1,4 +1,4 @@
-# Save Viewe and Editor (soon) for Dragon Warrior Monsters on the Gameboy Color
+# Save Viewer and Editor (soon) for Dragon Warrior Monsters on the Gameboy Color
 
 ## Description
 
