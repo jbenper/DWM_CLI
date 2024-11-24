@@ -1,4 +1,4 @@
-from utilities.models import SaveFile
+from models.save_file import SaveFile
 from utilities.general_utils import print_attributes, arguments
 
 if __name__ == "__main__":
