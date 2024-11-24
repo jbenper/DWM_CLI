@@ -14,6 +14,8 @@ def attributes(obj):
     
     disallowed_names.add("monster_int_list")
     disallowed_names.add("farm_int_list")
+    disallowed_names.add("save_data")
+
 
 
     return {

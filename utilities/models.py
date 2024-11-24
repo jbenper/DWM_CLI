@@ -6,7 +6,50 @@ from utilities.offsets import (
     PARENT_OFFSETS,
     TRAIT_OFFSETS,
     RESISTANCE_OFFSETS,
+    MonsterLibraryOffsets
 )
+
+class MonsterLibrary:
+    def __init__(self, binary_data: list[int] = None):
+        self.bits = bytearray(27)
+
+        if binary_data:
+            self.bits = bytearray(binary_data)
+    
+    def __repr__(self):
+        return f"Library: {self.get_number_tamed()}"
+    
+    def is_monster_tamed(self, monster: MonsterLibraryOffsets) -> bool:
+        """Check if a specific monster is tamed."""
+        byte_index = monster.value // 8
+        bit_index = monster.value % 8
+
+        return bool(self.bits[byte_index] & (1 << bit_index))
+    
+    def set_monster_tamed(self, monster: MonsterLibraryOffsets, tamed: bool = True):
+        """Set a monster's tamed status."""
+        byte_index = monster.value // 8
+        bit_index = monster.value % 8
+
+        if tamed:
+            self.bits[byte_index] |= (1 << bit_index)
+        else:
+            self.bits[byte_index] &= ~(1 << bit_index)
+    
+    def get_all_tamed_monsters(self) -> list[MonsterLibraryOffsets]:
+        """Return a list of all tamed monsters."""
+        return [monster for monster in MonsterLibraryOffsets if self.is_monster_tamed(monster)]
+    
+    def get_tamed_status_dict(self) -> dict[str, bool]:
+        """Return a dictionary of all monsters and their tamed status."""
+        return {monster.name: self.is_monster_tamed(monster) for monster in MonsterLibraryOffsets}
+    
+    def get_number_tamed(self) -> str:
+        return f"{len(self.get_all_tamed_monsters())} / 214"
+    
+    def to_ints(self) -> list[int]:
+        """Convert the collection back to bytes for saving."""
+        return list(self.bits)
 
 
 class MonsterParent:
@@ -553,7 +596,7 @@ class Monster:
         self.unlearned_skills: list[str] = self.get_unlearned_skills()
 
     def __repr__(self):
-        return f"Monster({self.species}, {self.name})"
+        return f"Monster({self.species}, {self.name}, {self.location}, {self.status})"
 
     def get_species(self) -> str:
         return decode.monster_species(
@@ -645,7 +688,13 @@ class Monster:
 
     def get_mom(self) -> MonsterParent:
         return MonsterParent(self.monster_int_list, "Mom")
-
+    
+    def exists(self) -> bool:
+        if self.name == '0000':
+            if self.species == "DrakSlime":
+                if self.learned_skills == ["Blaze"] * 8:
+                    return False
+        return True
 
 class Farm:
     def __init__(self, farm_int_list: list):
@@ -654,7 +703,12 @@ class Farm:
         self.monsters: list[Monster] = self.get_farm_monsters()
 
     def __repr__(self):
-        return f"Farm {self.farm_number} | Farm Length {len(self.farm_int_list) / 149}"
+        disp_monsters: list[Monster] = [monster for monster in self.monsters if monster.exists()]
+
+        while len(disp_monsters) < 19:
+            disp_monsters.append("Monster()")
+            
+        return f"Farm {self.farm_number}: {disp_monsters}"
 
     def get_farm_number(self) -> int:
         if len(self.farm_int_list) > 3200:
@@ -683,7 +737,14 @@ class SaveFile:
     def __repr__(self):
         return f"""Save File: {self.file_name} | SaveLength: {len(self.save_data)} | Master Name: {self.get_master_name()}
 Time Played: {self.get_time_played()} | Gold Amount: {self.get_gold_in_hand()} | Bank Amount: {self.get_gold_in_bank()}
-Text Speed: {self.get_text_speed()} | Current Party: {self.get_current_party()}
+Text Speed: {self.get_text_speed()} | {self.get_monster_library_from_save()} | Tiny Medal Count: {self.get_tiny_medals_from_save()}
+
+Current Party: {self.get_current_party()}
+
+{self.get_farm_one()}
+
+{self.get_farm_two()}
+
 Inventory: {self.get_inventory()}
 Vault: {self.get_vault_items()}"""
 
@@ -874,3 +935,9 @@ Vault: {self.get_vault_items()}"""
         current_party = [current_farm_monster_list[index] for index in party_indices]
 
         return current_party
+
+    def get_monster_library_from_save(self) -> MonsterLibrary:
+        return MonsterLibrary(self.save_data[SAVE_OFFSETS.monster_library.start_index : SAVE_OFFSETS.monster_library.end_index])
+    
+    def get_tiny_medals_from_save(self) -> int:
+        return self.save_data[SAVE_OFFSETS.tiny_medals.start_index : SAVE_OFFSETS.tiny_medals.end_index][0]
