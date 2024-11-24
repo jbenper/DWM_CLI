@@ -1,5 +1,5 @@
-import utilities.decoding as decode
 from utilities.offsets import MONSTER_OFFSETS, PARENT_OFFSETS, TRAIT_OFFSETS, RESISTANCE_OFFSETS, STAT_OFFSETS
+import utilities.decoding as decode
 
 class MonsterParent:
     def __init__(self, monster_ints: list[int], gender: str):

@@ -1,15 +1,5 @@
-from inspect import getmembers
 from types import FunctionType
-import argparse
-
-parser = argparse.ArgumentParser()
-parser.add_argument(
-    "file",
-    help="the location of the save file",
-    nargs="?",
-    default="test_saves/zdwm.sav",
-)
-arguments = parser.parse_args()
+from inspect import getmembers
 
 
 def attributes(obj):

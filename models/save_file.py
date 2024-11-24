@@ -1,16 +1,20 @@
-import utilities.decoding as decode
 from utilities.offsets import SAVE_OFFSETS
-from models.farm import Farm
-from models.monster import Monster
+import utilities.decoding as decode
+
 from models.monster_library import MonsterLibrary
+from models.monster import Monster
+from models.farm import Farm
+
+from pathlib import Path
 
 class SaveFile:
-    def __init__(self, file_name: str, save_ints: list[int]):
-        self.save_data: list[int] = save_ints
-        self.file_name: str = file_name
+    def __init__(self, file_loc: str):
+        self.file_loc: str = file_loc
+
+        self.save_data: list[int] = self.open_file()
 
     def __repr__(self):
-        return f"""Save File: {self.file_name} | SaveLength: {len(self.save_data)} | Master Name: {self.get_master_name()}
+        return f"""Save File: {self.file_loc} | SaveLength: {len(self.save_data)} | Master Name: {self.get_master_name()}
 Time Played: {self.get_time_played()} | Gold Amount: {self.get_gold_in_hand()} | Bank Amount: {self.get_gold_in_bank()}
 Text Speed: {self.get_text_speed()} | {self.get_monster_library_from_save()} | Tiny Medal Count: {self.get_tiny_medals_from_save()}
 
@@ -22,6 +26,18 @@ Current Party: {self.get_current_party()}
 
 Inventory: {self.get_inventory()}
 Vault: {self.get_vault_items()}"""
+
+    def open_file(self) -> list[int]:
+        path_to_save = Path(self.file_loc)
+
+        with path_to_save.open("rb") as save_file:
+            save_bytes: list[int] = [int_byte for int_byte in (save_file.read())]
+        
+        if len(save_bytes) != 8192:
+            raise Exception("Save File Length does not match .sav format")
+        
+        return save_bytes
+
 
     def get_master_name(self) -> str:
         return decode.name(

@@ -1,5 +1,7 @@
 from models.save_file import SaveFile
-from utilities.general_utils import print_attributes, arguments
+
+from utilities.cli import arguments
+from utilities.debugging_utils import print_attributes
 
 if __name__ == "__main__":
     print(r"""
@@ -12,16 +14,10 @@ if __name__ == "__main__":
  |_____/   \/  \/   |_|  |_| |_____/ \__,_| \_/ \___|
                                                                                               
 """)
-    file_loc: str = arguments.file
 
-    file_name: str = file_loc.split("/")[-1]
+    save = SaveFile(file_loc = arguments.file)
 
-    with open(file_loc, "rb") as save_file:
-        save_bytes: list[int] = [int_byte for int_byte in (save_file.read())]
-    
-    if len(save_bytes) != 8192:
-        raise Exception("Save File Length does not match .sav format")
-
-    save = SaveFile(file_name=file_name, save_ints=save_bytes)
-
-    print(save)
+    if arguments.interactive:
+        print("interactive")
+    else:
+        print(save)
