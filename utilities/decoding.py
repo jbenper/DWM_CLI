@@ -49,8 +49,8 @@ def list_of_items(item_list: list[int]) -> list[str]:
 
     item_list: list[str] = list(map(decode_items, hex_item_list))
 
-
     return item_list
+
 
 def skills(skill_int_list: list[int]) -> list[str]:
     hex_skill_list: list[str] = list(map(zero_pad_hex, skill_int_list))
@@ -65,6 +65,6 @@ def skills(skill_int_list: list[int]) -> list[str]:
 def monster_species(species_int: int) -> str:
     return monster_id.get(zero_pad_hex(species_int), None)
 
+
 def monster_family(family_int: int) -> str:
     return family_id.get(zero_pad_hex(family_int), None)
-

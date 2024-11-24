@@ -6,8 +6,9 @@ from utilities.offsets import (
     PARENT_OFFSETS,
     TRAIT_OFFSETS,
     RESISTANCE_OFFSETS,
-    MonsterLibraryOffsets
+    MonsterLibraryOffsets,
 )
+
 
 class MonsterLibrary:
     def __init__(self, binary_data: list[int] = None):
@@ -15,38 +16,45 @@ class MonsterLibrary:
 
         if binary_data:
             self.bits = bytearray(binary_data)
-    
+
     def __repr__(self):
         return f"Library: {self.get_number_tamed()}"
-    
+
     def is_monster_tamed(self, monster: MonsterLibraryOffsets) -> bool:
         """Check if a specific monster is tamed."""
         byte_index = monster.value // 8
         bit_index = monster.value % 8
 
         return bool(self.bits[byte_index] & (1 << bit_index))
-    
+
     def set_monster_tamed(self, monster: MonsterLibraryOffsets, tamed: bool = True):
         """Set a monster's tamed status."""
         byte_index = monster.value // 8
         bit_index = monster.value % 8
 
         if tamed:
-            self.bits[byte_index] |= (1 << bit_index)
+            self.bits[byte_index] |= 1 << bit_index
         else:
             self.bits[byte_index] &= ~(1 << bit_index)
-    
+
     def get_all_tamed_monsters(self) -> list[MonsterLibraryOffsets]:
         """Return a list of all tamed monsters."""
-        return [monster for monster in MonsterLibraryOffsets if self.is_monster_tamed(monster)]
-    
+        return [
+            monster
+            for monster in MonsterLibraryOffsets
+            if self.is_monster_tamed(monster)
+        ]
+
     def get_tamed_status_dict(self) -> dict[str, bool]:
         """Return a dictionary of all monsters and their tamed status."""
-        return {monster.name: self.is_monster_tamed(monster) for monster in MonsterLibraryOffsets}
-    
+        return {
+            monster.name: self.is_monster_tamed(monster)
+            for monster in MonsterLibraryOffsets
+        }
+
     def get_number_tamed(self) -> str:
         return f"{len(self.get_all_tamed_monsters())} / 214"
-    
+
     def to_ints(self) -> list[int]:
         """Convert the collection back to bytes for saving."""
         return list(self.bits)
@@ -688,13 +696,14 @@ class Monster:
 
     def get_mom(self) -> MonsterParent:
         return MonsterParent(self.monster_int_list, "Mom")
-    
+
     def exists(self) -> bool:
-        if self.name == '0000':
+        if self.name == "0000":
             if self.species == "DrakSlime":
                 if self.learned_skills == ["Blaze"] * 8:
                     return False
         return True
+
 
 class Farm:
     def __init__(self, farm_int_list: list):
@@ -703,11 +712,13 @@ class Farm:
         self.monsters: list[Monster] = self.get_farm_monsters()
 
     def __repr__(self):
-        disp_monsters: list[Monster] = [monster for monster in self.monsters if monster.exists()]
+        disp_monsters: list[Monster] = [
+            monster for monster in self.monsters if monster.exists()
+        ]
 
         while len(disp_monsters) < 19:
             disp_monsters.append("Monster()")
-            
+
         return f"Farm {self.farm_number}: {disp_monsters}"
 
     def get_farm_number(self) -> int:
@@ -937,7 +948,13 @@ Vault: {self.get_vault_items()}"""
         return current_party
 
     def get_monster_library_from_save(self) -> MonsterLibrary:
-        return MonsterLibrary(self.save_data[SAVE_OFFSETS.monster_library.start_index : SAVE_OFFSETS.monster_library.end_index])
-    
+        return MonsterLibrary(
+            self.save_data[
+                SAVE_OFFSETS.monster_library.start_index : SAVE_OFFSETS.monster_library.end_index
+            ]
+        )
+
     def get_tiny_medals_from_save(self) -> int:
-        return self.save_data[SAVE_OFFSETS.tiny_medals.start_index : SAVE_OFFSETS.tiny_medals.end_index][0]
+        return self.save_data[
+            SAVE_OFFSETS.tiny_medals.start_index : SAVE_OFFSETS.tiny_medals.end_index
+        ][0]
