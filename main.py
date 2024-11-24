@@ -7,7 +7,7 @@ if __name__ == "__main__":
     file_name: str = file_loc.split("/")[-1]
 
     with open(file_loc, "rb") as save_file:
-        save_bytes: list[int] = [byte for byte in (save_file.read())]
+        save_bytes: list[int] = [int_byte for int_byte in (save_file.read())]
     
     assert(len(save_bytes) == 8192)
 
