@@ -18,6 +18,7 @@
 ### Executing program
 
 * Run main.py passing in the save file location as the first argument
+* Passing in no argument will run it with a test save
 
 ## Roadmap
 
