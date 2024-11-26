@@ -1,4 +1,4 @@
-from models.monster import Monster
+from models.monster_model import Monster
 
 class Farm:
     def __init__(self, farm_int_list: list):

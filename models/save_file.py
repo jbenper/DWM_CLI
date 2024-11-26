@@ -2,7 +2,7 @@ from utilities.offsets import SAVE_OFFSETS
 import utilities.decoding as decode
 
 from models.monster_library import MonsterLibrary
-from models.monster import Monster
+from models.monster_model import Monster
 from models.farm import Farm
 
 from pathlib import Path

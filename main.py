@@ -21,3 +21,4 @@ if __name__ == "__main__":
         print("interactive")
     else:
         print(save)
+        print_attributes(save.get_farm_one().get_farm_monsters()[0])
