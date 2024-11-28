@@ -28,9 +28,10 @@
     * Monster Resistances
 
 * Editing save file data
-    * Individual Monsters
-    * Monsters Tames
+    * Individual Monster Data
+    * Monsters Tamed
     * Inventory/Vault Contents
+    * Tiny Medal Count
 
 
 ## Version History
