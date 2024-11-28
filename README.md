@@ -22,9 +22,15 @@
 
 ## Roadmap
 
-* Interactive data viewing - will be able to see more detailed information (monster stats, personality, skills, etc)
+* Interactive data viewing - will be able to see more detailed information
+    * Monster Stats
+    * Monster Traits
+    * Monster Resistances
 
 * Editing save file data
+    * Individual Monsters
+    * Monsters Tames
+    * Inventory/Vault Contents
 
 
 ## Version History
