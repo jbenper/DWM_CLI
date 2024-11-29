@@ -1,9 +1,9 @@
 from utilities.offsets import MONSTER_OFFSETS
 
-from models.monster.parents import MonsterParent
-from models.monster.resistances import MonsterResistances
-from models.monster.stats import MonsterStats
-from models.monster.personality import MonsterPersonality
+from models.monster_model.parents import MonsterParent
+from models.monster_model.resistances import MonsterResistances
+from models.monster_model.stats import MonsterStats
+from models.monster_model.personality import MonsterPersonality
 
 import utilities.decoding as decode
 
