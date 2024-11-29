@@ -3,6 +3,9 @@ from models.save_file import SaveFile
 from utilities.cli import arguments
 from utilities.debugging_utils import print_attributes
 
+from interactive import interactivity_main
+
+
 if __name__ == "__main__":
     print(r"""
           
@@ -18,7 +21,7 @@ if __name__ == "__main__":
     save = SaveFile(file_loc = arguments.file)
 
     if arguments.interactive:
-        print("interactive")
+        interactivity_main(savefile = save)
     else:
         print(save)
         # print_attributes(save.get_farm_one().get_farm_monsters()[0])

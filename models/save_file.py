@@ -20,10 +20,6 @@ Text Speed: {self.get_text_speed()} | {self.get_monster_library_from_save()} | T
 
 Current Party: {self.get_current_party()}
 
-{self.get_farm_one()}
-
-{self.get_farm_two()}
-
 Inventory: {self.get_inventory()}
 Vault: {self.get_vault_items()}"""
 
